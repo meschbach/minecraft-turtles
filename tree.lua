@@ -15,13 +15,25 @@
 -- limitations under the License.
 -- Copyright 2014 Mark Eschbach
 --
+--
+-- Intent:
+--
+--	Harvest a tree which is 1 wide and 1 deep.
+--
 -- Usage:
 --
 --	Place the turtle in front of the base of the turtle of the tree.
 --
+
+--
+-- Dig into the trunk of tree
+--
 turtle.dig()
 turtle.forward()
 
+--
+-- Dig up until nothing is detected above the turtle
+--
 local goneUp = 0
 while turtle.detectUp() do
 	turtle.digUp()
@@ -30,6 +42,9 @@ while turtle.detectUp() do
 	goneUp = goneUp + 1
 end
 
+--
+-- Return back to the original level of the turtle.
+--
 for returnedDown = 1, goneUp, 1 do
 	turtle.down()
 end
