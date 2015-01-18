@@ -40,11 +40,25 @@
 --	f(r) = v(r) + v( r - 1 )
 
 --
+-- Checks inventory
+--
+function invCheck()
+	slot = turtle.getSelectedSlot()
+	if slot != 16 then
+		if turtle.getItemCount() == 0 then
+			slot = slot + 1
+			turtle.select( slot )
+		end
+	end
+end
+
+--
 -- Lays the next side 
 --
 function lay_leg( length )
 	for count = 1, length, 1 do
 		turtle.forward()
+		invCheck()
 		turtle.placeDown()
 	end
 end
