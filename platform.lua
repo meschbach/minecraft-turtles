@@ -40,31 +40,54 @@
 --	f(r) = v(r) + v( r - 1 )
 
 --
+-- Checks inventory
+--
+function invCheck()
+	slot = turtle.getSelectedSlot()
+	if slot != 16 then
+		if turtle.getItemCount() == 0 then
+			slot = slot + 1
+			turtle.select( slot )
+		end
+	end
+end
+
+--
 -- Lays the next side 
 --
 function lay_leg( length )
 	for count = 1, length, 1 do
 		turtle.forward()
+		invCheck()
 		turtle.placeDown()
 	end
 end
 
 --
--- Lays 3 sides 
+-- Lays first side
+--
+function lay_firstSide( length )
+	turtle.select( 1 )
+	lay_side( length )
+end
+
+--
+-- Lays next side
 --
 function lay_sides( length )
-	for count = 1, 3, 1 do
-		lay_leg( length )
-		turtle.turnRight()
-	end
+	lay_leg( length )
+	turtle.turnRight()
 end
 
 --
 -- Extract the size
 --
 local args = {...}
-local length = args[1]
+local length = args[1] or 1
 
-for radi = length, 1, -1 do
-	lay_sides( radi )
+lay_firstSide( length )
+
+for radius = length - 1, 1, -1 do
+	lay_sides( radius )
+	lay_sides( radius )
 end
