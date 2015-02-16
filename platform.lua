@@ -44,11 +44,9 @@
 --
 function invCheck()
 	slot = turtle.getSelectedSlot()
-	if slot != 16 then
-		if turtle.getItemCount() == 0 then
-			slot = slot + 1
-			turtle.select( slot )
-		end
+	while slot < 17 and turtle.getItemCount() == 0 do
+		slot = slot + 1
+		turtle.select( slot )
 	end
 end
 
@@ -57,8 +55,8 @@ end
 --
 function lay_leg( length )
 	for count = 1, length, 1 do
-		turtle.forward()
 		invCheck()
+		turtle.forward()
 		turtle.placeDown()
 	end
 end
