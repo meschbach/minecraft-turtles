@@ -1,0 +1,15 @@
+local argv = {...}
+local depth = argv[1] or 1
+local slices = argv[2] or 1
+local direction = argv[3] or 1
+
+local move = false
+for i = 1,slices do  
+  if move then
+    shell.run(direction)
+  else
+    move =true
+  end
+  shell.run("lay_floor_strip "..depth)
+end
+

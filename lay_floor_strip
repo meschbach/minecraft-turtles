@@ -1,0 +1,37 @@
+local argv = {...}
+local count = argv[1] or 1
+local material_id = argv[2] or turtle.getItemDetail().name
+print( "Item "..material_id )
+
+
+function select_slot()
+  local current_item = turtle.getItemDetail()
+  if (not current_item) then
+    return find_material()
+  else
+    return true
+  end
+end
+
+function find_material()
+  for i = 1, 9 do 
+    local slot = turtle.getItemDetail(i)
+    if slot and slot.name == material_id then
+      turtle.select( i )
+      return true
+    end
+  end  
+  return false
+end
+
+for i = 1,count do  
+  if select_slot() then
+    turtle.placeDown()
+  end
+  turtle.forward()
+end
+
+for i = 1, count do 
+  turtle.back()
+end
+

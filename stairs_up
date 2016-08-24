@@ -1,0 +1,20 @@
+local argv = {...}
+local count = argv[1] or 1
+
+for i = 1,count do 
+  if i % 5 == 0 then
+    turtle.dig()
+    turtle.forward()
+    turtle.digDown()
+    turtle.digUp()
+  else
+    turtle.digUp()
+    turtle.up()
+    turtle.digUp()
+    turtle.dig()
+    turtle.forward()
+    turtle.digDown()
+    turtle.digUp()
+  end
+end
+
