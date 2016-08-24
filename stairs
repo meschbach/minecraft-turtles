@@ -1,29 +1,71 @@
+--
+-- Constructs stairs down that are 4 high and some given length (by default 5)
+--
+-- The intention is to build one-wide platforms after every 5 steps down.
+--
+
+function dig_step()
+  turtle.dig()
+	turtle.forward()
+	turtle.digUp()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+end
+
+function dig_steps( remaining )
+  if remaining == 0 then return 0 end
+
+	local count
+	if remaining > 5 then
+		count = 5
+	else
+	  count = 5 - remaining
+	end
+
+	for i = 1, count, 1 do
+		dig_step()
+	end
+
+	return remaining - count
+end
+
+function dig_platform( remaining )
+  if remaining == 0 then return 0 end
+
+	turtle.dig()
+	turtle.forward()
+	turtle.digUp()
+	turtle.digDown()
+
+	return remaining - 1
+end
+
+function descend( steps )
+	while steps > 0 do
+		steps = dig_steps( steps )
+		steps = dig_platform( steps )
+	end
+end
+
+function ascend( steps )
+	for i = 1, steps, 1 do
+	  if (i % 6) ~= 0 then
+	  	turtle.up()
+		end
+		turtle.back()
+	end
+end
+
 local argv = {...}
-local count = argv[1] or 5
+local count = argv[1] or 10
 
-for i = 1, count do
-  if i % 5 == 0 then
-    turtle.dig()
-    turtle.forward()
-    turtle.digUp()
-    turtle.digDown()
-  else
-    turtle.digDown()
-    turtle.down()
-    turtle.dig()
-    turtle.forward()
-    turtle.digUp()
-    turtle.digDown()
-  end
+local steps = tonumber(count)
+descend( steps )
+ascend( steps )
+
+-- TODO: get argument parsing done
+function help()
+  print("stairs [length=10]")
 end
 
-for i = 1,count do 
-  local position = count - i 
-  if position % 5 == 0 then
-    turtle.back()
-  else
-    turtle.up()
-    turtle.back()
-  end
-end
-turtle.up()
