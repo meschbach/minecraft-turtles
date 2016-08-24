@@ -1,0 +1,38 @@
+local argv = {...}
+local count = argv[1] or 1
+local columns = argv[2] or 1
+local direction = argv[3] or "right"
+
+function main()
+local moveColumn = false
+for column = 1, columns, 1 do 
+  print( "Column "..(column) )
+  if moveColumn then
+    shell.run(direction)
+  else
+    moveColumn = true
+  end
+  tunnel()
+end
+
+end
+
+function tunnel()
+print("Moving "..(count))
+for i = 1,count do
+  while turtle.dig() do
+  end
+  turtle.digDown()
+  turtle.digUp()
+  turtle.forward()
+end
+turtle.digDown()
+turtle.digUp()
+
+for i = 1, count do
+  turtle.back()
+end
+
+end
+
+main()

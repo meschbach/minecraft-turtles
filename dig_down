@@ -1,0 +1,11 @@
+local argv = {...}
+local count  = argv[1] or 1
+
+for i = 1,count do 
+  turtle.digDown()
+  turtle.down()
+end
+
+for i = 1,count do 
+  turtle.up()
+end

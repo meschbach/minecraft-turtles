@@ -1,0 +1,29 @@
+local argv = {...}
+local count = argv[1] or 5
+
+for i = 1, count do
+  if i % 5 == 0 then
+    turtle.dig()
+    turtle.forward()
+    turtle.digUp()
+    turtle.digDown()
+  else
+    turtle.digDown()
+    turtle.down()
+    turtle.dig()
+    turtle.forward()
+    turtle.digUp()
+    turtle.digDown()
+  end
+end
+
+for i = 1,count do 
+  local position = count - i 
+  if position % 5 == 0 then
+    turtle.back()
+  else
+    turtle.up()
+    turtle.back()
+  end
+end
+turtle.up()
