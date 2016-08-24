@@ -5,7 +5,7 @@ local direction = argv[3] or "right"
 
 function main()
 local moveColumn = false
-for column = 1,columns do 
+for column = 1, columns, 1 do 
   print( "Column "..(column) )
   if moveColumn then
     shell.run(direction)
