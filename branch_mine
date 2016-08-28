@@ -20,11 +20,11 @@ if torchSlotInfo then
   if torchSlotInfo.count < required_torches then
 		print( "Insufficient torches, what about the Grues?" )
   print( "I only have "..torchSlotInfo.count..", but I would really like "..required_torches)
-		exit( -2 )
+	  return -2
 	end
 else
 	print( "No torches, I'm afraid of the dark." )
-	exit(-1)
+	return -1
 end
 
 -- Dig the main shaft and prepare to carve teh branches
