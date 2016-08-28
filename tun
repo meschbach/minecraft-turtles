@@ -48,7 +48,7 @@ function tunnel( torchSlot, torchItemID )
 		while turtle.dig() do
 		end
 		turtle.digDown()
-		turtle.digUp()
+		while turtle.digUp() do end
 
 		if maybePlaceTorch( i, torchSlot, torchItemID ) then
 				turtle.select( torchSlot )
