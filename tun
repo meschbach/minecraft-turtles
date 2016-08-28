@@ -65,7 +65,12 @@ function tunnel( torchSlot, torchItemID )
 	end
 
 	for i = 1, count do
-		turtle.back()
+		local count = 0
+		while not turtle.back() do
+			print( "Failed to backup "..count.." times; waiting 1 second and trying again" )
+			os.sleep( 1.0 )
+			count = count + 1
+		end
 	end
 end
 
