@@ -14,10 +14,12 @@ local main_adit_length = branch_count * 4
 local required_torches_per_branch = 2 + ( branch_length / branch_torch_distance )
 local required_torches = required_torches_per_branch * ( branch_count + 1 )
 
+-- Ensure we have enough torches
 local torchSlotInfo = turtle.getItemDetail( torch_slot )
 if torchSlotInfo then
   if torchSlotInfo.count < required_torches then
 		print( "Insufficient torches, what about the Grues?" )
+  print( "I only have "..torchSlotInfo.count..", but I would really like "..required_torches)
 		exit( -2 )
 	end
 else
@@ -25,6 +27,7 @@ else
 	exit(-1)
 end
 
+-- Dig the main shaft and prepare to carve teh branches
 shell.run("tun", main_adit_length, main_adit_width, "right", 1 )
 shell.run("left", 2 )
 shell.run("forward", 3 )
