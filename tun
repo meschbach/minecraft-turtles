@@ -9,7 +9,13 @@ function main()
 	-- Figure out our torch
 	local torchItemID
 	if torchSlot ~= -1 then
-		torchItemID = turtle.getItemDetail( torchSlot ).name
+		local torchInfo = turtle.getItemDetail( torchSlot )
+		if torchInfo then
+			torchItemID = torchInfo.name
+		else
+			print( "No torches" )
+			exit(-1)
+		end
 	end
 
 	local moveColumn = false
