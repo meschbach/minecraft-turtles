@@ -34,15 +34,7 @@ shell.run("forward", 3 )
 shell.run("turn", "left" )
 
 function carve_branch()
-	local should_move = false
-	for i = 1, branch_count, 1 do
-		if should_move then
-			shell.run( "right", 3 )
-		else
-			should_move = true
-		end
-		shell.run( "tun", branch_length, 2, "right", 1 )
-	end
+	shell.run( "carve_branches", branch_count, branch_length, branch_torch_distance )
 end
 
 carve_branch()
