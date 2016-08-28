@@ -1,0 +1,48 @@
+local argv = {...}
+local branch_count = argv[1] or 2
+local branch_length = argv[2] or 8
+local branch_torch_distance = argv[3] or 9
+
+-- Constants
+local torch_slot = 1
+local main_adit_width = 3
+
+
+local main_adit_length = branch_count * 4
+
+-- Figure out how many torches we need
+local required_torches_per_branch = 2 + ( branch_length / branch_torch_distance )
+local required_torches = required_torches_per_branch * ( branch_count + 1 )
+
+local torchSlotInfo = turtle.getItemDetail( torch_slot )
+if torchSlotInfo then
+  if torchSlotInfo.count < required_torches then
+		print( "Insufficient torches, what about the Grues?" )
+		exit( -2 )
+	end
+else
+	print( "No torches, I'm afraid of the dark." )
+	exit(-1)
+end
+
+shell.run("tun", main_adit_length, main_adit_width, "right", 1 )
+shell.run("left", 2 )
+shell.run("forward", 3 )
+shell.run("turn", "left" )
+
+function carve_branch()
+	local should_move = false
+	for i = 1, branch_count, 1 do
+		if should_move then
+			shell.run( "right", 3 )
+		else
+			should_move = true
+		end
+		shell.run( "tun", branch_length, 2, "right", 1 )
+	end
+end
+
+carve_branch()
+shell.run( "turn", "right", "2" )
+shell.run( "forward", main_adit_width - 1 )
+carve_branch()
