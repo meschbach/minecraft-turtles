@@ -2,8 +2,16 @@ local argv = {...}
 local count = argv[1] or 1
 local columns = argv[2] or 1
 local direction = argv[3] or "right"
+local torchSlot = tonumber(argv[4] or "-1")
+local torchDistance = tonumber( argv[5] or "9" )
 
 function main()
+	-- Figure out our torch
+	local torchItemID
+	if torchSlot ~= -1 then
+		torchItemID = turtle.getItemDetail( torchSlot ).name
+	end
+
 	local moveColumn = false
 	for column = 1, columns, 1 do 
 		print( "Column "..(column) )
@@ -12,21 +20,43 @@ function main()
 		else
 			moveColumn = true
 		end
-		tunnel()
+		tunnel( torchSlot, torchItemID )
+
+		-- don't place any more after that tunnel slice
+		torchSlot = -1
 	end
 end
 
-function tunnel()
+function maybePlaceTorch( column, torchSlot, torchItemID )
+  if torchSlot == -1 then return false end
+	if column % torchDistance ~= 2 then
+		if not last then return false end
+	end
+	if turtle.getItemDetail( torchSlot ).name ~= torchItemID then return false end
+	return true
+end
+
+function tunnel( torchSlot, torchItemID )
 	print("Moving "..(count))
-	for i = 1,count do
+	for i = 1, count do
 		while turtle.dig() do
 		end
 		turtle.digDown()
 		turtle.digUp()
+
+		if maybePlaceTorch( i, torchSlot, torchItemID ) then
+				turtle.select( torchSlot )
+				turtle.placeDown( torchSlot )
+		end
 		turtle.forward()
 	end
 	turtle.digDown()
 	turtle.digUp()
+
+	if maybePlaceTorch( 2, torchSlot, torchItemID ) then
+			turtle.select( torchSlot )
+			turtle.placeDown( torchSlot )
+	end
 
 	for i = 1, count do
 		turtle.back()
