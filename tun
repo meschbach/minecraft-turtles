@@ -45,10 +45,10 @@ end
 function tunnel( torchSlot, torchItemID )
 	print("Moving "..(count))
 	for i = 1, count do
-		while turtle.dig() do
-		end
-		turtle.digDown()
+		while turtle.dig() do end
 		while turtle.digUp() do end
+		turtle.digDown()
+		while turtle.digUp() do os.sleep( 0.6 ) end
 
 		if maybePlaceTorch( i, torchSlot, torchItemID ) then
 				turtle.select( torchSlot )
@@ -57,7 +57,7 @@ function tunnel( torchSlot, torchItemID )
 		turtle.forward()
 	end
 	turtle.digDown()
-	while turtle.digUp() do end
+	while turtle.digUp() do os.sleep( 0.6 ) end
 
 	if maybePlaceTorch( 2, torchSlot, torchItemID ) then
 			turtle.select( torchSlot )
