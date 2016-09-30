@@ -1,0 +1,13 @@
+local argv = {...}
+local depth = argv[1] or 8
+local columns = argv[2] or 1
+local direction = argv[3] or "left"
+
+local column = 1
+for column = 1, columns, 1 do
+	shell.run("stun", depth)
+	if column ~= columns then
+		shell.run( direction )
+	end 
+end 
+
